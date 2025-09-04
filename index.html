@@ -15,17 +15,17 @@
         }
 
         .scrollable-container {
-            /* Hide the default horizontal scrollbar */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .scrollable-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, and Opera */
+            display: none;
         }
 
         .timeline-card {
             border: 4px solid;
+            cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
@@ -35,13 +35,12 @@
         }
 
         .american-theme-text {
-            color: #1a237e; /* A deep navy blue */
+            color: #1a237e;
         }
         .american-theme-title {
-            color: #b71c1c; /* A deep red */
+            color: #b71c1c;
         }
         
-        /* Custom scrollbar for visual hint on desktop */
         #timeline-wrapper {
             overflow-x: auto;
             scrollbar-width: thin;
@@ -60,81 +59,124 @@
         #timeline-wrapper::-webkit-scrollbar-track {
             background-color: #d1d5db;
         }
+
+        .details-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            margin: auto;
+            border: 4px solid #ef4444;
+        }
+        
+        .details-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a237e;
+            margin-bottom: 1rem;
+        }
+        
+        .details-year {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #b71c1c;
+            margin-bottom: 1rem;
+        }
+        
+        .details-description {
+            font-size: 1.125rem;
+            color: #4a5568;
+            line-height: 1.75;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4 overflow-hidden">
-    <div class="w-full max-w-7xl mx-auto text-center">
-        <h1 class="text-4xl sm:text-5xl font-extrabold american-theme-text mb-2">
-            A History of the United States 🇺🇸
-        </h1>
-        <p class="text-lg text-gray-700 mb-12 max-w-2xl mx-auto">Scroll up and down to navigate through the timeline of key events in US history.</p>
+    <div class="w-full max-w-7xl mx-auto text-center" id="main-container">
 
-        <!-- Timeline container that the user sees -->
-        <div id="timeline-wrapper" class="relative overflow-x-hidden w-full h-auto py-10">
+        <!-- Main Timeline View -->
+        <div id="timeline-view">
+            <h1 class="text-4xl sm:text-5xl font-extrabold american-theme-text mb-2">
+                A History of the United States 🇺🇸
+            </h1>
+            <p class="text-lg text-gray-700 mb-12 max-w-2xl mx-auto">Scroll up and down to navigate through the timeline of key events in US history. Click an event to learn more!</p>
 
-            <!-- The actual scrollable timeline content -->
-            <div id="timeline-content" class="flex flex-nowrap items-center h-full transition-transform duration-300 ease-in-out">
-                
-                <!-- Individual Timeline Events -->
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1776 ✍️</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Declaration of Independence</h3>
-                    <p class="text-gray-600">The thirteen American colonies declare their independence from Great Britain, officially beginning the American Revolutionary War.</p>
-                </div>
-                
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1787 🏛️</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">U.S. Constitution Signed</h3>
-                    <p class="text-gray-600">The Constitution is drafted and signed, establishing the framework for the U.S. government and replacing the Articles of Confederation.</p>
-                </div>
-                
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1803 🏞️</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Louisiana Purchase</h3>
-                    <p class="text-gray-600">The United States acquires approximately 828,000,000 square miles of territory from France, doubling the size of the new nation.</p>
-                </div>
+            <div id="timeline-wrapper" class="relative overflow-x-hidden w-full h-auto py-10">
+                <div id="timeline-content" class="flex flex-nowrap items-center h-full transition-transform duration-300 ease-in-out">
+                    
+                    <!-- Individual Timeline Events -->
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card" data-event="declaration-of-independence">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1776 ✍️</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Declaration of Independence</h3>
+                        <p class="text-gray-600">The thirteen American colonies declare their independence from Great Britain.</p>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card" data-event="us-constitution-signed">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1787 🏛️</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">U.S. Constitution Signed</h3>
+                        <p class="text-gray-600">The Constitution is drafted and signed, establishing the framework for the U.S. government.</p>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card" data-event="louisiana-purchase">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1803 🏞️</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Louisiana Purchase</h3>
+                        <p class="text-gray-600">The United States acquires approximately 828,000,000 square miles of territory from France.</p>
+                    </div>
 
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1861-1865 ⚔️</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">American Civil War</h3>
-                    <p class="text-gray-600">A civil war is fought between the Union and the Confederate states, primarily over the issue of slavery and states' rights.</p>
-                </div>
-                
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1929 📉</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">The Great Depression Begins</h3>
-                    <p class="text-gray-600">The stock market crashes, signaling the start of the Great Depression, a severe worldwide economic downturn.</p>
-                </div>
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card" data-event="american-civil-war">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1861-1865 ⚔️</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">American Civil War</h3>
+                        <p class="text-gray-600">A civil war is fought between the Union and the Confederate states, primarily over the issue of slavery.</p>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card" data-event="great-depression">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1929 📉</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">The Great Depression Begins</h3>
+                        <p class="text-gray-600">The stock market crashes, signaling the start of a severe worldwide economic downturn.</p>
+                    </div>
 
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1941 💣</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Attack on Pearl Harbor</h3>
-                    <p class="text-gray-600">The Empire of Japan launches a surprise military strike on the U.S. naval base at Pearl Harbor, leading to the U.S. entering World War II.</p>
-                </div>
-                
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1945 🕊️</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">End of World War II</h3>
-                    <p class="text-gray-600">The war ends in Europe and Asia, with the unconditional surrender of Germany and Japan, ushering in a new era of global politics.</p>
-                </div>
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card" data-event="pearl-harbor">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1941 💣</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Attack on Pearl Harbor</h3>
+                        <p class="text-gray-600">The Empire of Japan launches a surprise military strike, leading to the U.S. entering World War II.</p>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card" data-event="end-of-wwii">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1945 🕊️</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">End of World War II</h3>
+                        <p class="text-gray-600">The war ends in Europe and Asia, with the unconditional surrender of Germany and Japan.</p>
+                    </div>
 
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1947 🤝</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">The Truman Doctrine</h3>
-                    <p class="text-gray-600">President Truman establishes a policy of providing political, military, and economic assistance to all democratic nations under threat from authoritarian forces, a key moment in the Cold War.</p>
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card" data-event="truman-doctrine">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1947 🤝</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">The Truman Doctrine</h3>
+                        <p class="text-gray-600">A policy of providing assistance to all democratic nations under threat from authoritarian forces.</p>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card" data-event="marshall-plan">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1948 💵</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">The Marshall Plan</h3>
+                        <p class="text-gray-600">A U.S. program providing aid to Western Europe following the devastation of World War II.</p>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card" data-event="korean-war">
+                        <h2 class="text-xl font-bold american-theme-title mb-2">1950-1953 🇰🇷</h2>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Korean War</h3>
+                        <p class="text-gray-600">A war fought between North Korea and South Korea, with the United Nations supporting the South.</p>
+                    </div>
                 </div>
-                
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-red-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1948 💵</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">The Marshall Plan</h3>
-                    <p class="text-gray-600">A U.S. program providing aid to Western Europe following the devastation of World War II, aimed at economic recovery and preventing the spread of communism.</p>
-                </div>
-                
-                <div class="flex-shrink-0 w-[320px] mx-8 p-6 bg-white rounded-xl shadow-lg border-blue-500 timeline-card">
-                    <h2 class="text-xl font-bold american-theme-title mb-2">1950-1953 🇰🇷</h2>
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Korean War</h3>
-                    <p class="text-gray-600">A war fought between North Korea and South Korea, with the United Nations (primarily the US) supporting the South and China and the Soviet Union supporting the North.</p>
-                </div>
+            </div>
+        </div>
+
+        <!-- Details View (hidden by default) -->
+        <div id="details-view" class="hidden">
+            <button id="back-button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full mb-8">
+                ← Back to Timeline
+            </button>
+            <div class="details-card">
+                <h2 class="details-year" id="details-year"></h2>
+                <h3 class="details-title" id="details-title"></h3>
+                <p class="details-description text-left" id="details-description"></p>
             </div>
         </div>
 
@@ -144,43 +186,117 @@
         document.addEventListener('DOMContentLoaded', () => {
             const timelineContent = document.getElementById('timeline-content');
             const timelineWrapper = document.getElementById('timeline-wrapper');
+            const timelineView = document.getElementById('timeline-view');
+            const detailsView = document.getElementById('details-view');
+            const backButton = document.getElementById('back-button');
+            const detailsYear = document.getElementById('details-year');
+            const detailsTitle = document.getElementById('details-title');
+            const detailsDescription = document.getElementById('details-description');
+            
             let scrollPosition = 0;
-            const scrollSpeed = 0.5; // Adjust this value to change scrolling speed
+            const scrollSpeed = 0.5;
 
+            // Define the detailed content for each event
+            const eventDetails = {
+                'declaration-of-independence': {
+                    year: '1776 ✍️',
+                    title: 'Declaration of Independence',
+                    description: 'The Declaration of Independence, adopted by the Continental Congress on July 4, 1776, announced that the thirteen American colonies, then at war with Great Britain, regarded themselves as thirteen independent sovereign states, no longer under British rule. The document is a founding statement of American democratic principles, asserting that all men are created equal and have the right to "Life, Liberty and the pursuit of Happiness."',
+                },
+                'us-constitution-signed': {
+                    year: '1787 🏛️',
+                    title: 'U.S. Constitution Signed',
+                    description: 'The U.S. Constitution was signed on September 17, 1787, at the Constitutional Convention in Philadelphia. It established America\'s national government and fundamental laws, and guaranteed certain basic rights for its citizens. It replaced the Articles of Confederation, which had been found to be too weak to govern the new nation effectively. The Constitution remains the supreme law of the land.',
+                },
+                'louisiana-purchase': {
+                    year: '1803 🏞️',
+                    title: 'Louisiana Purchase',
+                    description: 'The Louisiana Purchase was the acquisition of the Louisiana territory by the United States from France in 1803. The U.S. paid fifty million francs and a cancellation of debts worth eighteen million francs for a total of sixty-eight million francs. The purchase effectively doubled the size of the United States and was a key moment in westward expansion, sparking the Lewis and Clark expedition.',
+                },
+                'american-civil-war': {
+                    year: '1861-1865 ⚔️',
+                    title: 'American Civil War',
+                    description: 'The American Civil War was a civil war in the United States from 1861 to 1865. It was fought between the United States of America (the "Union") and the Confederate States of America (the "Confederacy"), formed by eleven Southern states that had seceded from the Union. The central cause of the war was the dispute over whether to allow slavery to expand into the western territories, leading to more slave states.',
+                },
+                'great-depression': {
+                    year: '1929 📉',
+                    title: 'The Great Depression Begins',
+                    description: 'The Great Depression was the most severe economic downturn in the history of the industrialized world, lasting from 1929 to 1939. It began after the stock market crash of October 1929, which sent Wall Street into a panic and wiped out millions of investors. Consumer spending and investment dropped, leading to steep declines in industrial output and rising levels of unemployment.',
+                },
+                'pearl-harbor': {
+                    year: '1941 💣',
+                    title: 'Attack on Pearl Harbor',
+                    description: 'On December 7, 1941, the Imperial Japanese Navy Air Service launched a surprise military strike on the United States naval base at Pearl Harbor in Hawaii. The attack led to a direct and immediate declaration of war by the United States on Japan the next day, and brought the U.S. into World War II.',
+                },
+                'end-of-wwii': {
+                    year: '1945 🕊️',
+                    title: 'End of World War II',
+                    description: 'World War II was the deadliest conflict in human history. It ended in Europe with the surrender of Germany on May 8, 1945 (V-E Day), and in Asia with the surrender of Japan on September 2, 1945 (V-J Day), following the atomic bombings of Hiroshima and Nagasaki. The war\'s conclusion led to the formation of the United Nations and the beginning of the Cold War.',
+                },
+                'truman-doctrine': {
+                    year: '1947 🤝',
+                    title: 'The Truman Doctrine',
+                    description: 'The Truman Doctrine was an American foreign policy that originated with the primary goal of containing Soviet geopolitical expansion during the Cold War. Announced by President Harry S. Truman on March 12, 1947, it pledged to provide political, military, and economic assistance to all democratic nations under threat from external or internal authoritarian forces.',
+                },
+                'marshall-plan': {
+                    year: '1948 💵',
+                    title: 'The Marshall Plan',
+                    description: 'The Marshall Plan, officially known as the European Recovery Program, was a U.S. initiative enacted in 1948 to provide foreign aid to Western Europe. The U.S. transferred over $13 billion in economic recovery programs to Western European economies after the end of World War II. The goals were to rebuild war-torn regions, remove trade barriers, modernize industry, and prevent the spread of communism.',
+                },
+                'korean-war': {
+                    year: '1950-1953 🇰🇷',
+                    title: 'Korean War',
+                    description: 'The Korean War was a war between North Korea (with the support of China and the Soviet Union) and South Korea (with the support of the United Nations, primarily the United States). It began on June 25, 1950, when North Korea invaded South Korea. The war ended in a stalemate with an armistice in 1953, creating a demilitarized zone near the 38th parallel.',
+                },
+            };
+
+            // Horizontal scroll logic
             function updateMaxScroll() {
-                // Calculate the maximum allowed scroll position.
-                // It's the width of the content minus the width of the wrapper.
                 const maxScroll = timelineContent.scrollWidth - timelineWrapper.clientWidth;
                 return maxScroll;
             }
 
-            // Function to handle the wheel event for horizontal scrolling
             function handleScroll(e) {
-                // Prevent the default vertical scroll behavior of the page
                 e.preventDefault(); 
-
                 const maxScroll = updateMaxScroll();
-
-                // Determine scroll direction and update position
-                // e.deltaY is positive for scrolling down, negative for scrolling up
                 scrollPosition += e.deltaY * scrollSpeed;
-                
-                // Clamp the scroll position to prevent scrolling past the ends
                 scrollPosition = Math.max(0, Math.min(scrollPosition, maxScroll));
-                
-                // Apply the new position using a CSS transform for smooth animation
                 timelineContent.style.transform = `translateX(-${scrollPosition}px)`;
             }
 
-            // Add the event listener to the window
             window.addEventListener('wheel', handleScroll);
-
-            // Add a resize listener to re-calculate the max scroll if the window changes size
             window.addEventListener('resize', () => {
                 updateMaxScroll();
-                // Also clamp the current position in case the new max is smaller
                 scrollPosition = Math.max(0, Math.min(scrollPosition, updateMaxScroll()));
                 timelineContent.style.transform = `translateX(-${scrollPosition}px)`;
+            });
+
+            // Click event logic
+            document.querySelectorAll('.timeline-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const eventKey = card.dataset.event;
+                    const details = eventDetails[eventKey];
+                    if (details) {
+                        detailsYear.textContent = details.year;
+                        detailsTitle.textContent = details.title;
+                        detailsDescription.textContent = details.description;
+                        
+                        timelineView.classList.add('hidden');
+                        detailsView.classList.remove('hidden');
+                        
+                        // Disable the scroll listener when on the details view
+                        window.removeEventListener('wheel', handleScroll);
+                    }
+                });
+            });
+
+            // Back button logic
+            backButton.addEventListener('click', () => {
+                detailsView.classList.add('hidden');
+                timelineView.classList.remove('hidden');
+
+                // Re-enable the scroll listener when back on the timeline
+                window.addEventListener('wheel', handleScroll);
             });
         });
     </script>
